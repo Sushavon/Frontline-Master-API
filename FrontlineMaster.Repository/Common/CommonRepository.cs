@@ -1,4 +1,4 @@
-﻿using FrontlineMaster.Entity.Hierarchy;
+﻿using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using FrontlineMaster.Repository.ContextModel;
 using Microsoft.Extensions.Configuration;
@@ -178,6 +178,20 @@ namespace FrontlineMaster.Repository.Hierarchy
         {
             QuestId = m.QuestId,
             QuestLine = m.QuestLine
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<MemberEntity>> GetMembers()
+        {
+            var result = await Task.Run(() => _context.Member.Where(x => x.IsActive.Value)
+        .Select(m => new MemberEntity
+        {
+            MemberId = m.MemberId,
+            MemberCode = m.MemberCode,
+            MemberDesc = m.MemberDesc
         }).Distinct().AsQueryable());
 
 

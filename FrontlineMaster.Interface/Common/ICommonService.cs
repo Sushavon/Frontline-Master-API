@@ -1,4 +1,4 @@
-﻿using FrontlineMaster.Entity.Hierarchy;
+﻿using FrontlineMaster.Entity.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,5 +17,6 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<List<SpecialityEntity>> GetSpecialities(int companyId);
         Task<List<TownTypeEntity>> GetTownTypes(int companyId);
         Task<List<SecurityQuestionEntity>> GetSecurityQuestions();
+        Task<List<MemberEntity>> GetMembers();
     }
 }

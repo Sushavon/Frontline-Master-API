@@ -1,5 +1,5 @@
 ﻿using FrontlineMaster.API.Controllers.Base;
-using FrontlineMaster.Entity.Hierarchy;
+using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -80,6 +80,12 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
         public async Task<List<SecurityQuestionEntity>> GetSecurityQuestions()
         {
             return await _hierarchyService.GetSecurityQuestions();
+        }
+
+        [HttpGet("GetMembers")]
+        public async Task<List<MemberEntity>> GetMembers()
+        {
+            return await _hierarchyService.GetMembers();
         }
 
     }

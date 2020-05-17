@@ -1,5 +1,5 @@
 ﻿
-using FrontlineMaster.Entity.Hierarchy;
+using FrontlineMaster.Entity.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +17,7 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<IQueryable<SpecialityEntity>> GetSpecialities(int companyId);
         Task<IQueryable<TownTypeEntity>> GetTownTypes(int companyId);
         Task<IQueryable<SecurityQuestionEntity>> GetSecurityQuestions();
+        Task<IQueryable<MemberEntity>> GetMembers();
         void Dispose();
     }
 }

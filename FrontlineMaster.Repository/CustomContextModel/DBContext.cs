@@ -1,4 +1,4 @@
-﻿using FrontlineMaster.Entity.Hierarchy;
+﻿using FrontlineMaster.Entity.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace FrontlineMaster.Repository.ContextModel

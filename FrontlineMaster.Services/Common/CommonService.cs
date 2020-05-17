@@ -1,4 +1,4 @@
-﻿using FrontlineMaster.Entity.Hierarchy;
+﻿using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +78,12 @@ namespace FrontlineMaster.Services.Hierarchy
         public async Task<List<SecurityQuestionEntity>> GetSecurityQuestions()
         {
             var result = await _hierarchyRepository.GetSecurityQuestions();
+            return result.ToList();
+        }
+
+        public async Task<List<MemberEntity>> GetMembers()
+        {
+            var result = await _hierarchyRepository.GetMembers();
             return result.ToList();
         }
     }

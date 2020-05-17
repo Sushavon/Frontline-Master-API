@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FrontlineMaster.Entity.Hierarchy
+namespace FrontlineMaster.Entity.Common
 {
     public class CompanyEntity
     {

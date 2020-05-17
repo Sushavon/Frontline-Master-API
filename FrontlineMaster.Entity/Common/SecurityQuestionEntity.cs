@@ -1,4 +1,4 @@
-﻿namespace FrontlineMaster.Entity.Hierarchy
+﻿namespace FrontlineMaster.Entity.Common
 {
     public class SecurityQuestionEntity
     {
