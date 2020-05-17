@@ -50,5 +50,35 @@ namespace FrontlineMaster.Services.Hierarchy
             var result = await _hierarchyRepository.GetDesignations(sbuId);
             return result.ToList();
         }
+
+        public async Task<List<StateEntity>> GetStates(int companyId)
+        {
+            var result = await _hierarchyRepository.GetStates(companyId);
+            return result.ToList();
+        }
+
+        public async Task<List<CityEntity>> GetCities(int stateId)
+        {
+            var result = await _hierarchyRepository.GetCities(stateId);
+            return result.ToList();
+        }
+
+        public async Task<List<SpecialityEntity>> GetSpecialities(int companyId)
+        {
+            var result = await _hierarchyRepository.GetSpecialities(companyId);
+            return result.ToList();
+        }
+
+        public async Task<List<TownTypeEntity>> GetTownTypes(int companyId)
+        {
+            var result = await _hierarchyRepository.GetTownTypes(companyId);
+            return result.ToList();
+        }
+
+        public async Task<List<SecurityQuestionEntity>> GetSecurityQuestions()
+        {
+            var result = await _hierarchyRepository.GetSecurityQuestions();
+            return result.ToList();
+        }
     }
 }

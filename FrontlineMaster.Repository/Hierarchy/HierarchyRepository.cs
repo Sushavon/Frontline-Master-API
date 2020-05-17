@@ -111,5 +111,77 @@ namespace FrontlineMaster.Repository.Hierarchy
 
             return result;
         }
+
+        public async Task<IQueryable<StateEntity>> GetStates(int companyId)
+        {
+            var result = await Task.Run(() => _context.State.Where(x => x.IsActive.Value && x.CompanyId == companyId)
+           .Select(m => new StateEntity
+           {
+               StateId = m.StateId,
+               CompanyId = m.CompanyId,
+               StateCode = m.StateCode,
+               StateName = m.StateName
+           }).Distinct().AsQueryable());
+
+            return result;
+        }
+
+        public async Task<IQueryable<CityEntity>> GetCities(int stateId)
+        {
+            var result = await Task.Run(() => _context.City.Where(x => x.IsActive.Value && x.StateId == stateId)
+           .Select(m => new CityEntity
+           {
+               CityId = m.CityId,
+               StateId = m.StateId,
+               CityCode = m.CityCode,
+               CityName = m.CityName
+           }).Distinct().AsQueryable());
+
+            return result;
+        }
+
+        public async Task<IQueryable<SpecialityEntity>> GetSpecialities(int companyId)
+        {
+            var result = await Task.Run(() => _context.Speciality.Where(x => x.IsActive.Value && x.CompanyId == companyId)
+          .Select(m => new SpecialityEntity
+          {
+              SpecialityId = m.SpecialityId,
+              CompanyId = m.CompanyId,
+              SpecCode = m.SpecCode,
+              SpecDesc = m.SpecDesc,
+              SpecStatus = m.SpecStatus
+          }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<TownTypeEntity>> GetTownTypes(int companyId)
+        {
+            var result = await Task.Run(() => _context.TownType.Where(x => x.IsActive && x.CompanyId == companyId)
+         .Select(m => new TownTypeEntity
+         {
+             TownTypeId = m.TownTypeId,
+             CompanyId = m.CompanyId,
+             TownTypeCode = m.TownTypeCode,
+             TownTypeDesc = m.TownTypeDesc
+         }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<SecurityQuestionEntity>> GetSecurityQuestions()
+        {
+            var result = await Task.Run(() => _context.SecurityQuest.Where(x => x.IsActive.Value)
+        .Select(m => new SecurityQuestionEntity
+        {
+            QuestId = m.QuestId,
+            QuestLine = m.QuestLine
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
     }
 }

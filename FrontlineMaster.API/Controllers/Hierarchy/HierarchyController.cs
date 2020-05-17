@@ -52,85 +52,35 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
             return await _hierarchyService.GetDesignations(sbu.SbuId);
         }
 
-        //[HttpGet("GetAllPersonalDetailSP")]
-        //public async Task<List<PersonalDetailEntity>> GetAllPersonalDetailSP()
-        //{
-        //    var query = new SearchEntity();
-        //    return await _personalDetailService.FindSP(query);
-        //}
+        [HttpGet("GetStates")]
+        public async Task<List<StateEntity>> GetStates(CompanyEntity company)
+        {
+            return await _hierarchyService.GetStates(company.CompanyId);
+        }
 
-        //[HttpPost("AddPersonalDetail")]
-        //public async Task<ApiResponse> AddPersonalDetail(PersonalDetailEntity entity)
-        //{
-        //    var result = await _personalDetailService.Add(entity);
-        //    if (result)
-        //    {
-        //        return new ApiResponse
-        //        {
-        //            Messsage = "Successfully Added",
-        //            Status = Status.Success.ToString()
-        //        };
-        //    }
+        [HttpGet("GetCities")]
+        public async Task<List<CityEntity>> GetCities(StateEntity state)
+        {
+            return await _hierarchyService.GetCities(state.StateId);
+        }
 
-        //    return new ApiResponse
-        //    {
-        //        Messsage = "Some error ,failed to add member",
-        //        Status = Status.Failed.ToString()
-        //    };
-        //}
+        [HttpGet("GetSpecialities")]
+        public async Task<List<SpecialityEntity>> GetSpecialities(CompanyEntity company)
+        {
+            return await _hierarchyService.GetSpecialities(company.CompanyId);
+        }
 
-        //[HttpPut("UpdatePersonalDetail")]
-        //public async Task<ApiResponse> UpdatePersonalDetail(PersonalDetailEntity entity)
-        //{
-        //    var result = await _personalDetailService.Update(entity);
-        //    if (result)
-        //    {
-        //        return new ApiResponse
-        //        {
-        //            Messsage = "Successfully Updated",
-        //            Status = Status.Success.ToString()
-        //        };
-        //    }
+        [HttpGet("GetTownTypes")]
+        public async Task<List<TownTypeEntity>> GetTownTypes(CompanyEntity company)
+        {
+            return await _hierarchyService.GetTownTypes(company.CompanyId);
+        }
 
-        //    return new ApiResponse
-        //    {
-        //        Messsage = "Some error ,failed to update member",
-        //        Status = Status.Failed.ToString()
-        //    };
-        //}
-
-        //[HttpDelete("DeletePersonalDetail")]
-        //public async Task<ApiResponse> DeletePersonalDetail(PersonalDetailEntity entity)
-        //{
-        //    var result = await _personalDetailService.Delete(entity);
-        //    if (result)
-        //    {
-        //        return new ApiResponse
-        //        {
-        //            Messsage = "Successfully Deleted",
-        //            Status = Status.Success.ToString()
-        //        };
-        //    }
-
-        //    return new ApiResponse
-        //    {
-        //        Messsage = "Some error ,failed to delete member",
-        //        Status = Status.Failed.ToString()
-        //    };
-        //}
-
-        //[HttpGet("GetAllMember")]
-        //public async Task<List<MemberEntity>> GetAllMember()
-        //{
-        //    return await _personalDetailService.GetAllMember();
-        //}
-        //protected virtual void Dispose()
-        //{
-        //    if (_personalDetailService != null)
-        //    {
-        //        _personalDetailService.Dispose();
-        //    }
-        //}
+        [HttpGet("GetSecurityQuestions")]
+        public async Task<List<SecurityQuestionEntity>> GetSecurityQuestions()
+        {
+            return await _hierarchyService.GetSecurityQuestions();
+        }
 
     }
 }
