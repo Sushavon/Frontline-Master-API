@@ -10,5 +10,7 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<List<CompanyEntity>> GetAllCompany();
         Task<List<SBUEntity>> GetAllSbu();
         Task<List<SBUEntity>> GetSbu(int companyId);
+        Task<List<DesignationWithGroupEntity>> GetDesignations();
+        Task<List<DesignationWithGroupEntity>> GetDesignations(int sbuId);
     }
 }

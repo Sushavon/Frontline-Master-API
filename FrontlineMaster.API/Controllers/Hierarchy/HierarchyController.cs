@@ -40,6 +40,18 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
             return await _hierarchyService.GetSbu(company.CompanyId);
         }
 
+        [HttpGet("GetAllDesignations")]
+        public async Task<List<DesignationWithGroupEntity>> GetAllDesignations()
+        {
+            return await _hierarchyService.GetDesignations();
+        }
+
+        [HttpGet("GetDesignation")]
+        public async Task<List<DesignationWithGroupEntity>> GetDesignation(SBUEntity sbu)
+        {
+            return await _hierarchyService.GetDesignations(sbu.SbuId);
+        }
+
         //[HttpGet("GetAllPersonalDetailSP")]
         //public async Task<List<PersonalDetailEntity>> GetAllPersonalDetailSP()
         //{

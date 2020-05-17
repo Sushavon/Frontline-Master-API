@@ -69,5 +69,47 @@ namespace FrontlineMaster.Repository.Hierarchy
 
             return result;
         }
+
+        public async Task<IQueryable<DesignationWithGroupEntity>> GetDesignations()
+        {
+            var result = await Task.Run(() => from des in _context.Desig
+                                              join desgrp in _context.DesigGrp on des.DesigId equals desgrp.DesigId
+                                              where des.IsActive == true && desgrp.IsActive == true
+                                              select new DesignationWithGroupEntity
+                                              {
+                                                  DesigId = des.DesigId,
+                                                  DesigGrpId = desgrp.DesigGrpId,
+                                                  DesigCode = des.DesigCode,
+                                                  DesigDesc = des.DesigDesc,
+                                                  DesigCategory = des.DesigCategory,
+                                                  DesigHierarchy = des.DesigHierarchy,
+                                                  GroupCode = desgrp.GroupCode,
+                                                  SbuId = des.SbuId
+                                              });
+
+            return result;
+        }
+
+        public async Task<IQueryable<DesignationWithGroupEntity>> GetDesignations(int sbuId)
+        {
+            var result = await Task.Run(() => from des in _context.Desig
+                                              join desgrp in _context.DesigGrp on des.DesigId equals desgrp.DesigId
+                                              join sbu in _context.Sbu on des.SbuId equals sbu.SbuId
+                                              where des.IsActive == true && desgrp.IsActive == true && sbu.IsActive == true && des.SbuId == sbuId
+                                              select new DesignationWithGroupEntity
+                                              {
+                                                  DesigId = des.DesigId,
+                                                  DesigGrpId = desgrp.DesigGrpId,
+                                                  DesigCode = des.DesigCode,
+                                                  DesigDesc = des.DesigDesc,
+                                                  DesigCategory = des.DesigCategory,
+                                                  DesigHierarchy = des.DesigHierarchy,
+                                                  GroupCode = desgrp.GroupCode,
+                                                  SbuId = des.SbuId,
+                                                  SbuCode = sbu.SbuCode
+                                              });
+
+            return result;
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<IQueryable<CompanyEntity>> GetAllCompany();
         Task<IQueryable<SBUEntity>> GetAllSbu();
         Task<IQueryable<SBUEntity>> GetSbu(int companyId);
+        Task<IQueryable<DesignationWithGroupEntity>> GetDesignations();
+        Task<IQueryable<DesignationWithGroupEntity>> GetDesignations(int sbuId);
         void Dispose();
     }
 }

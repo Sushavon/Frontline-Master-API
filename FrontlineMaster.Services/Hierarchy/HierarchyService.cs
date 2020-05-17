@@ -38,5 +38,17 @@ namespace FrontlineMaster.Services.Hierarchy
             var result = await _hierarchyRepository.GetSbu(companyId);
             return result.ToList();
         }
+
+        public async Task<List<DesignationWithGroupEntity>> GetDesignations()
+        {
+            var result = await _hierarchyRepository.GetDesignations();
+            return result.ToList();
+        }
+
+        public async Task<List<DesignationWithGroupEntity>> GetDesignations(int sbuId)
+        {
+            var result = await _hierarchyRepository.GetDesignations(sbuId);
+            return result.ToList();
+        }
     }
 }
