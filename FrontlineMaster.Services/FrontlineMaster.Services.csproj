@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FrontlineMaster.Entity\FrontlineMaster.Entity.csproj" />
+    <ProjectReference Include="..\FrontlineMaster.Interface\FrontlineMaster.Interface.csproj" />
+    <ProjectReference Include="..\FrontlineMaster.Repository\FrontlineMaster.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
