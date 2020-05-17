@@ -46,8 +46,8 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
             return await _hierarchyService.GetDesignations();
         }
 
-        [HttpGet("GetDesignation")]
-        public async Task<List<DesignationWithGroupEntity>> GetDesignation(SBUEntity sbu)
+        [HttpGet("GetDesignations")]
+        public async Task<List<DesignationWithGroupEntity>> GetDesignations(SBUEntity sbu)
         {
             return await _hierarchyService.GetDesignations(sbu.SbuId);
         }
