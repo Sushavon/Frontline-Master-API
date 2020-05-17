@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FrontlineMaster.Services.Hierarchy
 {
-    public class HierarchyService : IHierarchyService
+    public class CommonService : ICommonService
     {
-        private IHierarchyRepository _hierarchyRepository = null;
+        private ICommonRepository _hierarchyRepository = null;
 
-        public HierarchyService(IHierarchyRepository hierarchyRepository)
+        public CommonService(ICommonRepository hierarchyRepository)
         {
             _hierarchyRepository = hierarchyRepository;
         }

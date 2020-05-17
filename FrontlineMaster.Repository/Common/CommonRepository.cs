@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace FrontlineMaster.Repository.Hierarchy
 {
-    public class HierarchyRepository : IHierarchyRepository
+    public class CommonRepository : ICommonRepository
     {
         private readonly DBContext _context = null;
         private IConfiguration _configuration = null;
         public int LoggedInUserId;
-        public HierarchyRepository(DBContext context, IConfiguration configuration)
+        public CommonRepository(DBContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;

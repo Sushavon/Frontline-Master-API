@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FrontlineMaster.Interface.Hierarchy
 {
-    public interface IHierarchyRepository
+    public interface ICommonRepository
     {
         Task<IQueryable<CompanyEntity>> GetAllCompany();
         Task<IQueryable<SBUEntity>> GetAllSbu();

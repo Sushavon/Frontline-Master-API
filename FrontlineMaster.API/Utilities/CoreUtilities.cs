@@ -85,11 +85,11 @@ namespace FrontlineMaster.API.Utilities
         {
             services.AddScoped<DBContext>();
             #region Service
-            services.AddScoped<IHierarchyService, HierarchyService>();
+            services.AddScoped<ICommonService, CommonService>();
             #endregion
 
             #region Repository
-            services.AddScoped<IHierarchyRepository, HierarchyRepository>();
+            services.AddScoped<ICommonRepository, CommonRepository>();
             //services.AddScoped<MovieRepository>();
             #endregion
         }

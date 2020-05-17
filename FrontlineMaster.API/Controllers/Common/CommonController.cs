@@ -11,11 +11,11 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
 
     [Route("api/[controller]")]
     [ApiController]
-    public class HierarchyController : BaseController
+    public class CommonController : BaseController
     {
-        private readonly IHierarchyService _hierarchyService = null;
+        private readonly ICommonService _hierarchyService = null;
 
-        public HierarchyController(IHierarchyService hierarchyService)
+        public CommonController(ICommonService hierarchyService)
         {
             _hierarchyService = hierarchyService;
         }
