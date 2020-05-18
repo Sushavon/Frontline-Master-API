@@ -5,7 +5,7 @@ namespace FrontlineMaster.Repository.ContextModel
 {
     public partial class DBContext : DbContext
     {
-        public virtual DbSet<CompanyEntity> CompanyEntityListSP { get; set; }
+        public virtual DbSet<MenuEntity> MenuEntityItems { get; set; }
 
     }
 }

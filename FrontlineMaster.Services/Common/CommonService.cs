@@ -134,5 +134,11 @@ namespace FrontlineMaster.Services.Hierarchy
             var result = await _hierarchyRepository.GetCodeValues(typeCode);
             return result.ToList();
         }
+
+        public async Task<List<MenuEntity>> GetMenuItems(int repId, string loginType)
+        {
+            var result = await _hierarchyRepository.GetMenuItems(repId,loginType);
+            return result.ToList();
+        }
     }
 }

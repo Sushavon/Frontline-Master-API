@@ -26,5 +26,6 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<List<DropReasonEntity>> GetDropReasons();
         Task<List<QualificationEntity>> GetQualifications(int specialityId);
         Task<List<CodeValueEntity>> GetCodeValues(string typeCode);
+        Task<List<MenuEntity>> GetMenuItems(int repId, string loginType);
     }
 }

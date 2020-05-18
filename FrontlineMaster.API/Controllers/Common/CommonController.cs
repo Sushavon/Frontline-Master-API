@@ -192,5 +192,14 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
             return NoContent();
         }
 
+        [HttpGet("GetMenuItems/{repId}/{loginType}")]
+        public async Task<IActionResult> GetMenuItems(int repId, string loginType)
+        {
+            var result = await _hierarchyService.GetMenuItems(repId,loginType);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
     }
 }

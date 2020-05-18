@@ -1,5 +1,6 @@
 ﻿
 using FrontlineMaster.Entity.Common;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,7 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<IQueryable<DropReasonEntity>> GetDropReasons();
         Task<IQueryable<QualificationEntity>> GetQualifications(int specialityId);
         Task<IQueryable<CodeValueEntity>> GetCodeValues(string typeCode);
+        Task<List<MenuEntity>> GetMenuItems(int repId, string loginType);
         void Dispose();
     }
 }

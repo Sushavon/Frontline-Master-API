@@ -1,8 +1,12 @@
 ﻿using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using FrontlineMaster.Repository.ContextModel;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -317,6 +321,14 @@ namespace FrontlineMaster.Repository.Hierarchy
             SeqNo = m.SeqNo
 
         }).Distinct().AsQueryable()); ;
+            return result;
+        }
+
+        public async Task<List<MenuEntity>> GetMenuItems(int repId, string loginType)
+        {
+            var result = await Task.Run(() => 
+                            _context.MenuEntityItems.FromSqlRaw($"EXEC {_configuration.GetValue<string>("GetMenuItems")} {repId} {loginType}").ToList()
+                            );
             return result;
         }
     }
