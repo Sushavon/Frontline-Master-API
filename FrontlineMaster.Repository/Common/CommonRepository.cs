@@ -197,5 +197,86 @@ namespace FrontlineMaster.Repository.Hierarchy
 
             return result;
         }
+
+        public async Task<IQueryable<McrCategoryEntity>> GetMcrCategories(int desigId)
+        {
+            var result = await Task.Run(() => _context.McrCategory.Where(x => x.IsActive.Value && x.DesigId == desigId)
+        .Select(m => new McrCategoryEntity
+        {
+            DesigId = m.DesigId,
+            McrCategoryId = m.McrCategoryId,
+            McrCategory1 = m.McrCategory1
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<ZoneEntity>> GetZones(int sbuId)
+        {
+            var result = await Task.Run(() => _context.Zone.Where(x => x.IsActive.Value && x.SbuId == sbuId)
+        .Select(m => new ZoneEntity
+        {
+            ZoneId = m.ZoneId,
+            SbuId = m.SbuId,
+            ZoneCode = m.ZoneCode,
+            ZoneDesc = m.ZoneDesc,
+            ZdZoneCode = m.ZdZoneCode
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<RegionEntity>> GetRegions(int zoneId)
+        {
+            var result = await Task.Run(() => _context.Region.Where(x => x.IsActive.Value && x.ZoneId == zoneId)
+        .Select(m => new RegionEntity
+        {
+            RegionId = m.RegionId,
+            ZoneId = m.ZoneId,
+            RegionCode = m.RegionCode,
+            RegionDesc = m.RegionDesc,
+            ZdRegionCode = m.ZdRegionCode
+            
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<AreaEntity>> GetAreas(int regionId)
+        {
+            var result = await Task.Run(() => _context.Area.Where(x => x.IsActive.Value && x.RegionId == regionId)
+        .Select(m => new AreaEntity
+        {
+            AreaId = m.AreaId,
+            AreaCode = m.AreaCode,
+            AreaDesc = m.AreaDesc,
+            ZdAreaCode = m.ZdAreaCode,
+            RegionId = m.RegionId
+
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
+
+        public async Task<IQueryable<HeadquarterEntity>> GetHeadquarters(int headquarterId)
+        {
+            var result = await Task.Run(() => _context.Headquarter.Where(x => x.IsActive.Value && x.HeadquarterId == headquarterId)
+        .Select(m => new HeadquarterEntity
+        {
+            HeadquarterId = m.HeadquarterId,
+            AreaId = m.AreaId,
+            HqCode = m.HqCode,
+            HqDesc = m.HqDesc,
+            ZdHqCode = m.ZdHqCode
+
+        }).Distinct().AsQueryable());
+
+
+            return result;
+        }
     }
 }

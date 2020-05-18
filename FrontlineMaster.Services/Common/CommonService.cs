@@ -86,5 +86,35 @@ namespace FrontlineMaster.Services.Hierarchy
             var result = await _hierarchyRepository.GetMembers();
             return result.ToList();
         }
+
+        public async Task<List<McrCategoryEntity>> GetMcrCategories(int desigId)
+        {
+            var result = await _hierarchyRepository.GetMcrCategories(desigId);
+            return result.ToList();
+        }
+
+        public async Task<List<ZoneEntity>> GetZones(int sbuId)
+        {
+            var result = await _hierarchyRepository.GetZones(sbuId);
+            return result.ToList();
+        }
+
+        public async Task<List<RegionEntity>> GetRegions(int zoneId)
+        {
+            var result = await _hierarchyRepository.GetRegions(zoneId);
+            return result.ToList();
+        }
+
+        public async Task<List<AreaEntity>> GetAreas(int regionId)
+        {
+            var result = await _hierarchyRepository.GetAreas(regionId);
+            return result.ToList();
+        }
+
+        public async Task<List<HeadquarterEntity>> GetHeadquarters(int headquarterId)
+        {
+            var result = await _hierarchyRepository.GetHeadquarters(headquarterId);
+            return result.ToList();
+        }
     }
 }

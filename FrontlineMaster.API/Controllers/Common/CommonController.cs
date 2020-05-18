@@ -22,70 +22,148 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
 
 
         [HttpGet("GetAllCompany")]
-        public async Task<List<CompanyEntity>> GetAllPersonalDetails()
+        public async Task<IActionResult> GetAllPersonalDetails()
         {
-            return await _hierarchyService.GetAllCompany();
+            var result = await _hierarchyService.GetAllCompany();
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
 
         [HttpGet("GetAllSbu")]
-        public async Task<List<SBUEntity>> GetAllSbu()
+        public async Task<IActionResult> GetAllSbu()
         {
-            return await _hierarchyService.GetAllSbu();
+            var result = await _hierarchyService.GetAllSbu();
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetSbu")]
-        public async Task<List<SBUEntity>> GetSbu(CompanyEntity company)
+        public async Task<IActionResult> GetSbu(CompanyEntity company)
         {
-            return await _hierarchyService.GetSbu(company.CompanyId);
+            var result = await _hierarchyService.GetSbu(company.CompanyId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetAllDesignations")]
-        public async Task<List<DesignationWithGroupEntity>> GetAllDesignations()
+        public async Task<IActionResult> GetAllDesignations()
         {
-            return await _hierarchyService.GetDesignations();
+            var result = await _hierarchyService.GetDesignations();
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetDesignations")]
-        public async Task<List<DesignationWithGroupEntity>> GetDesignations(SBUEntity sbu)
+        public async Task<IActionResult> GetDesignations(SBUEntity sbu)
         {
-            return await _hierarchyService.GetDesignations(sbu.SbuId);
+            var result = await _hierarchyService.GetDesignations(sbu.SbuId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetStates")]
-        public async Task<List<StateEntity>> GetStates(CompanyEntity company)
+        public async Task<IActionResult> GetStates(CompanyEntity company)
         {
-            return await _hierarchyService.GetStates(company.CompanyId);
+            var result = await _hierarchyService.GetStates(company.CompanyId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetCities")]
-        public async Task<List<CityEntity>> GetCities(StateEntity state)
+        public async Task<IActionResult> GetCities(StateEntity state)
         {
-            return await _hierarchyService.GetCities(state.StateId);
+            var result = await _hierarchyService.GetCities(state.StateId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetSpecialities")]
-        public async Task<List<SpecialityEntity>> GetSpecialities(CompanyEntity company)
+        public async Task<IActionResult> GetSpecialities(CompanyEntity company)
         {
-            return await _hierarchyService.GetSpecialities(company.CompanyId);
+            var result = await _hierarchyService.GetSpecialities(company.CompanyId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetTownTypes")]
-        public async Task<List<TownTypeEntity>> GetTownTypes(CompanyEntity company)
+        public async Task<IActionResult> GetTownTypes(CompanyEntity company)
         {
-            return await _hierarchyService.GetTownTypes(company.CompanyId);
+            var result = await _hierarchyService.GetTownTypes(company.CompanyId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetSecurityQuestions")]
-        public async Task<List<SecurityQuestionEntity>> GetSecurityQuestions()
+        public async Task<IActionResult> GetSecurityQuestions()
         {
-            return await _hierarchyService.GetSecurityQuestions();
+            var result = await _hierarchyService.GetSecurityQuestions();
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
         [HttpGet("GetMembers")]
-        public async Task<List<MemberEntity>> GetMembers()
+        public async Task<IActionResult> GetMembers()
         {
-            return await _hierarchyService.GetMembers();
+            var result = await _hierarchyService.GetMembers();
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetMcrCategories")]
+        public async Task<IActionResult> GetMcrCategories(DesignationWithGroupEntity designation)
+        {
+            var result = await _hierarchyService.GetMcrCategories(designation.DesigId);
+            if(result!=null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetZones")]
+        public async Task<IActionResult> GetZones(SBUEntity sbu)
+        {
+            var result = await _hierarchyService.GetZones(sbu.SbuId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetRegions")]
+        public async Task<IActionResult> GetRegions(ZoneEntity zone)
+        {
+            var result = await _hierarchyService.GetRegions(zone.ZoneId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetAreas")]
+        public async Task<IActionResult> GetAreas(RegionEntity region)
+        {
+            var result = await _hierarchyService.GetAreas(region.RegionId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetHeadquarters")]
+        public async Task<IActionResult> GetHeadquarters(AreaEntity area)
+        {
+            var result = await _hierarchyService.GetHeadquarters(area.AreaId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
         }
 
     }

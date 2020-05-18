@@ -18,5 +18,10 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<List<TownTypeEntity>> GetTownTypes(int companyId);
         Task<List<SecurityQuestionEntity>> GetSecurityQuestions();
         Task<List<MemberEntity>> GetMembers();
+        Task<List<McrCategoryEntity>> GetMcrCategories(int desigId);
+        Task<List<ZoneEntity>> GetZones(int sbuId);
+        Task<List<RegionEntity>> GetRegions(int zoneId);
+        Task<List<AreaEntity>> GetAreas(int regionId);
+        Task<List<HeadquarterEntity>> GetHeadquarters(int headquarterId);
     }
 }
