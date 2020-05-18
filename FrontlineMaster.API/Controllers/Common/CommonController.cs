@@ -166,5 +166,23 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
             return NoContent();
         }
 
+        [HttpGet("GetDropReasons")]
+        public async Task<IActionResult> GetDropReasons()
+        {
+            var result = await _hierarchyService.GetDropReasons();
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetQualifications")]
+        public async Task<IActionResult> GetQualifications(SpecialityEntity speciality)
+        {
+            var result = await _hierarchyService.GetQualifications(speciality.SpecialityId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
     }
 }

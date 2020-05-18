@@ -116,5 +116,17 @@ namespace FrontlineMaster.Services.Hierarchy
             var result = await _hierarchyRepository.GetHeadquarters(headquarterId);
             return result.ToList();
         }
+
+        public async Task<List<DropReasonEntity>> GetDropReasons()
+        {
+            var result = await _hierarchyRepository.GetDropReasons();
+            return result.ToList();
+        }
+
+        public async Task<List<QualificationEntity>> GetQualifications(int specialityId)
+        {
+            var result = await _hierarchyRepository.GetQualifications(specialityId);
+            return result.ToList();
+        }
     }
 }

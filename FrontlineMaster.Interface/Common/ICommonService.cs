@@ -23,5 +23,7 @@ namespace FrontlineMaster.Interface.Hierarchy
         Task<List<RegionEntity>> GetRegions(int zoneId);
         Task<List<AreaEntity>> GetAreas(int regionId);
         Task<List<HeadquarterEntity>> GetHeadquarters(int headquarterId);
+        Task<List<DropReasonEntity>> GetDropReasons();
+        Task<List<QualificationEntity>> GetQualifications(int specialityId);
     }
 }

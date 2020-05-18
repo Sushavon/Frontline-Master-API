@@ -238,7 +238,7 @@ namespace FrontlineMaster.Repository.Hierarchy
             RegionCode = m.RegionCode,
             RegionDesc = m.RegionDesc,
             ZdRegionCode = m.ZdRegionCode
-            
+
         }).Distinct().AsQueryable());
 
 
@@ -276,6 +276,33 @@ namespace FrontlineMaster.Repository.Hierarchy
         }).Distinct().AsQueryable());
 
 
+            return result;
+        }
+
+        public async Task<IQueryable<DropReasonEntity>> GetDropReasons()
+        {
+            var result = await Task.Run(() => _context.DrDropReason.Where(x => x.IsActive.Value)
+        .Select(m => new DropReasonEntity
+        {
+           ReasonCode = m.ReasonCode,
+           ReasonDesc = m.ReasonDesc
+
+        }).Distinct().AsQueryable());
+            return result;
+        }
+
+        public async Task<IQueryable<QualificationEntity>> GetQualifications(int specialityId)
+        {
+            var result = await Task.Run(() => _context.Qualification.Where(x => x.IsActive.Value && x.SpecId == specialityId)
+        .Select(m => new QualificationEntity
+        {
+            QualiCode = m.QualiCode,
+            QualiDesc = m.QualiDesc,
+            OldQuali = m.OldQuali,
+            QualificationId = m.QualificationId,
+            SpecId = m.SpecId
+
+        }).Distinct().AsQueryable());
             return result;
         }
     }
