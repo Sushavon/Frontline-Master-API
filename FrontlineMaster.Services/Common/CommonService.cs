@@ -137,7 +137,7 @@ namespace FrontlineMaster.Services.Hierarchy
 
         public async Task<List<MenuEntity>> GetMenuItems(int repId, string loginType)
         {
-            var result = await _hierarchyRepository.GetMenuItems(repId,loginType);
+            var result = await _hierarchyRepository.GetMenuItems(repId, loginType);
             return result.ToList();
         }
     }

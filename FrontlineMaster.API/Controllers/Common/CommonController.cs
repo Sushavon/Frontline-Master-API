@@ -1,5 +1,4 @@
 ﻿using FrontlineMaster.API.Controllers.Base;
-using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -195,7 +194,7 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
         [HttpGet("GetMenuItems/{repId}/{loginType}")]
         public async Task<IActionResult> GetMenuItems(int repId, string loginType)
         {
-            var result = await _hierarchyService.GetMenuItems(repId,loginType);
+            var result = await _hierarchyService.GetMenuItems(repId, loginType);
             if (result != null && result.Count > 0)
                 return Ok(result);
             return NoContent();

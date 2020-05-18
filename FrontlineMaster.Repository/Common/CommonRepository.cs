@@ -1,7 +1,6 @@
 ﻿using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using FrontlineMaster.Repository.ContextModel;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -326,7 +325,7 @@ namespace FrontlineMaster.Repository.Hierarchy
 
         public async Task<List<MenuEntity>> GetMenuItems(int repId, string loginType)
         {
-            var result = await Task.Run(() => 
+            var result = await Task.Run(() =>
                             _context.MenuEntityItems.FromSqlRaw($"EXEC {_configuration.GetValue<string>("GetMenuItems")} {repId} {loginType}").ToList()
                             );
             return result;
