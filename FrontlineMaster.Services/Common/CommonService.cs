@@ -128,5 +128,11 @@ namespace FrontlineMaster.Services.Hierarchy
             var result = await _hierarchyRepository.GetQualifications(specialityId);
             return result.ToList();
         }
+
+        public async Task<List<CodeValueEntity>> GetCodeValues(string typeCode)
+        {
+            var result = await _hierarchyRepository.GetCodeValues(typeCode);
+            return result.ToList();
+        }
     }
 }

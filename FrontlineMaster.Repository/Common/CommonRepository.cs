@@ -284,8 +284,8 @@ namespace FrontlineMaster.Repository.Hierarchy
             var result = await Task.Run(() => _context.DrDropReason.Where(x => x.IsActive.Value)
         .Select(m => new DropReasonEntity
         {
-           ReasonCode = m.ReasonCode,
-           ReasonDesc = m.ReasonDesc
+            ReasonCode = m.ReasonCode,
+            ReasonDesc = m.ReasonDesc
 
         }).Distinct().AsQueryable());
             return result;
@@ -303,6 +303,20 @@ namespace FrontlineMaster.Repository.Hierarchy
             SpecId = m.SpecId
 
         }).Distinct().AsQueryable());
+            return result;
+        }
+
+        public async Task<IQueryable<CodeValueEntity>> GetCodeValues(string typeCode)
+        {
+            var result = await Task.Run(() => _context.CodeValue.Where(x => x.IsActive.Value && x.TypeCode == typeCode).OrderBy(o => o.SeqNo)
+        .Select(m => new CodeValueEntity
+        {
+            CodeValId = m.CodeValId,
+            ValCode = m.ValCode,
+            ValDesc = m.ValDesc,
+            SeqNo = m.SeqNo
+
+        }).Distinct().AsQueryable()); ;
             return result;
         }
     }

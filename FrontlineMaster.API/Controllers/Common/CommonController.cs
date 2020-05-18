@@ -2,7 +2,6 @@
 using FrontlineMaster.Entity.Common;
 using FrontlineMaster.Interface.Hierarchy;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -125,7 +124,7 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
         public async Task<IActionResult> GetMcrCategories(DesignationWithGroupEntity designation)
         {
             var result = await _hierarchyService.GetMcrCategories(designation.DesigId);
-            if(result!=null && result.Count > 0)
+            if (result != null && result.Count > 0)
                 return Ok(result);
             return NoContent();
         }
@@ -179,6 +178,15 @@ namespace FrontlineMaster.API.Controllers.FamilyDetails
         public async Task<IActionResult> GetQualifications(SpecialityEntity speciality)
         {
             var result = await _hierarchyService.GetQualifications(speciality.SpecialityId);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            return NoContent();
+        }
+
+        [HttpGet("GetCodeValues/{typeCode}")]
+        public async Task<IActionResult> GetCodeValues(string typeCode)
+        {
+            var result = await _hierarchyService.GetCodeValues(typeCode);
             if (result != null && result.Count > 0)
                 return Ok(result);
             return NoContent();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FrontlineMaster.Entity.Common
+﻿namespace FrontlineMaster.Entity.Common
 {
     public class DropReasonEntity
     {
