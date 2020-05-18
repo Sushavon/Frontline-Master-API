@@ -7,17 +7,13 @@ namespace FrontlineMaster.Repository.ContextModel
     {
         public RepMst()
         {
-            DrAddrDraftApprovalLevel1By = new HashSet<DrAddrDraft>();
-            DrAddrDraftApprovalLevel2By = new HashSet<DrAddrDraft>();
-            DrAddrDraftApprovalLevel3By = new HashSet<DrAddrDraft>();
-            DrAddrDraftApprovedBy = new HashSet<DrAddrDraft>();
-            DrAddrDraftHoApprovalBy = new HashSet<DrAddrDraft>();
-            DrMstDraftApprovalLevel1By = new HashSet<DrMstDraft>();
-            DrMstDraftApprovalLevel2By = new HashSet<DrMstDraft>();
-            DrMstDraftApprovalLevel3By = new HashSet<DrMstDraft>();
-            DrMstDraftApprovedBy = new HashSet<DrMstDraft>();
-            DrMstDraftHoApprovalBy = new HashSet<DrMstDraft>();
-            DrMstDraftRep = new HashSet<DrMstDraft>();
+            DoctorDraftLastApprovalBy = new HashSet<DoctorDraft>();
+            DoctorDraftRep = new HashSet<DoctorDraft>();
+            DrAddrDraftLastApprovalBy = new HashSet<DrAddrDraft>();
+            DrAddrDraftRep = new HashSet<DrAddrDraft>();
+            DrAllocation = new HashSet<DrAllocation>();
+            DrAllocationDraftLastApprovalBy = new HashSet<DrAllocationDraft>();
+            DrAllocationDraftRep = new HashSet<DrAllocationDraft>();
             FamilyDetail = new HashSet<FamilyDetail>();
             UserHistory = new HashSet<UserHistory>();
             UserMenuGroupRights = new HashSet<UserMenuGroupRights>();
@@ -105,17 +101,13 @@ namespace FrontlineMaster.Repository.ContextModel
         public virtual State State { get; set; }
         public virtual TownType TownType { get; set; }
         public virtual Zone Zone { get; set; }
-        public virtual ICollection<DrAddrDraft> DrAddrDraftApprovalLevel1By { get; set; }
-        public virtual ICollection<DrAddrDraft> DrAddrDraftApprovalLevel2By { get; set; }
-        public virtual ICollection<DrAddrDraft> DrAddrDraftApprovalLevel3By { get; set; }
-        public virtual ICollection<DrAddrDraft> DrAddrDraftApprovedBy { get; set; }
-        public virtual ICollection<DrAddrDraft> DrAddrDraftHoApprovalBy { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftApprovalLevel1By { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftApprovalLevel2By { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftApprovalLevel3By { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftApprovedBy { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftHoApprovalBy { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftRep { get; set; }
+        public virtual ICollection<DoctorDraft> DoctorDraftLastApprovalBy { get; set; }
+        public virtual ICollection<DoctorDraft> DoctorDraftRep { get; set; }
+        public virtual ICollection<DrAddrDraft> DrAddrDraftLastApprovalBy { get; set; }
+        public virtual ICollection<DrAddrDraft> DrAddrDraftRep { get; set; }
+        public virtual ICollection<DrAllocation> DrAllocation { get; set; }
+        public virtual ICollection<DrAllocationDraft> DrAllocationDraftLastApprovalBy { get; set; }
+        public virtual ICollection<DrAllocationDraft> DrAllocationDraftRep { get; set; }
         public virtual ICollection<FamilyDetail> FamilyDetail { get; set; }
         public virtual ICollection<UserHistory> UserHistory { get; set; }
         public virtual ICollection<UserMenuGroupRights> UserMenuGroupRights { get; set; }

@@ -7,7 +7,10 @@ namespace FrontlineMaster.Repository.ContextModel
     {
         public Company()
         {
-            DrMstDraft = new HashSet<DrMstDraft>();
+            Doctor = new HashSet<Doctor>();
+            DoctorDraft = new HashSet<DoctorDraft>();
+            DrAllocation = new HashSet<DrAllocation>();
+            DrAllocationDraft = new HashSet<DrAllocationDraft>();
             MenuGroupRights = new HashSet<MenuGroupRights>();
             Sbu = new HashSet<Sbu>();
             Speciality = new HashSet<Speciality>();
@@ -32,7 +35,10 @@ namespace FrontlineMaster.Repository.ContextModel
         public string ModifiedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public virtual ICollection<DrMstDraft> DrMstDraft { get; set; }
+        public virtual ICollection<Doctor> Doctor { get; set; }
+        public virtual ICollection<DoctorDraft> DoctorDraft { get; set; }
+        public virtual ICollection<DrAllocation> DrAllocation { get; set; }
+        public virtual ICollection<DrAllocationDraft> DrAllocationDraft { get; set; }
         public virtual ICollection<MenuGroupRights> MenuGroupRights { get; set; }
         public virtual ICollection<Sbu> Sbu { get; set; }
         public virtual ICollection<Speciality> Speciality { get; set; }

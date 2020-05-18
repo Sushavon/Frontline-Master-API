@@ -3,19 +3,16 @@ using System.Collections.Generic;
 
 namespace FrontlineMaster.Repository.ContextModel
 {
-    public partial class UserSecurityQuest
+    public partial class EntApprConfig
     {
-        public int UserSecurityQuestId { get; set; }
-        public int RepId { get; set; }
-        public short QuestId { get; set; }
-        public string QuestAns { get; set; }
+        public int ApprLevelId { get; set; }
+        public string EntityName { get; set; }
+        public string ApprLevel { get; set; }
+        public int SeqNo { get; set; }
         public bool? IsActive { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
-
-        public virtual SecurityQuest Quest { get; set; }
-        public virtual RepMst Rep { get; set; }
     }
 }

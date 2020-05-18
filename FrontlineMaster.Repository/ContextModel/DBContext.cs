@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.IO;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace FrontlineMaster.Repository.ContextModel
 {
@@ -16,14 +16,24 @@ namespace FrontlineMaster.Repository.ContextModel
         }
 
         public virtual DbSet<Area> Area { get; set; }
+        public virtual DbSet<Chemist> Chemist { get; set; }
+        public virtual DbSet<ChemistAllocation> ChemistAllocation { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<CodeValue> CodeValue { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Desig> Desig { get; set; }
         public virtual DbSet<DesigGrp> DesigGrp { get; set; }
+        public virtual DbSet<Doctor> Doctor { get; set; }
+        public virtual DbSet<DoctorAddr> DoctorAddr { get; set; }
+        public virtual DbSet<DoctorDraft> DoctorDraft { get; set; }
         public virtual DbSet<DrAddrDraft> DrAddrDraft { get; set; }
+        public virtual DbSet<DrAddrVisitHr> DrAddrVisitHr { get; set; }
+        public virtual DbSet<DrAddrVisitHrDraft> DrAddrVisitHrDraft { get; set; }
+        public virtual DbSet<DrAllocation> DrAllocation { get; set; }
+        public virtual DbSet<DrAllocationDraft> DrAllocationDraft { get; set; }
         public virtual DbSet<DrDropReason> DrDropReason { get; set; }
-        public virtual DbSet<DrMstDraft> DrMstDraft { get; set; }
+        public virtual DbSet<EntApprConfig> EntApprConfig { get; set; }
+        public virtual DbSet<EntityApproval> EntityApproval { get; set; }
         public virtual DbSet<FamilyDetail> FamilyDetail { get; set; }
         public virtual DbSet<Headquarter> Headquarter { get; set; }
         public virtual DbSet<McrCategory> McrCategory { get; set; }
@@ -50,11 +60,8 @@ namespace FrontlineMaster.Repository.ContextModel
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationBuilder builder = new ConfigurationBuilder();
-                builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
-                var root = builder.Build();
-                var sampleConnectionString = root.GetConnectionString("DBContext");
-                optionsBuilder.UseSqlServer(sampleConnectionString);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=IN-CCUETOUWV002\\MSSQLSERVER2017;Database=PWCPharma;Persist Security Info=False;User ID=sa;Password=pwc@1234;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -115,6 +122,156 @@ namespace FrontlineMaster.Repository.ContextModel
                     .HasForeignKey(d => d.RegionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AREA_REGION");
+            });
+
+            modelBuilder.Entity<Chemist>(entity =>
+            {
+                entity.ToTable("CHEMIST", "CHEMIST");
+
+                entity.Property(e => e.ChemistId).HasColumnName("CHEMIST_ID");
+
+                entity.Property(e => e.Add1)
+                    .HasColumnName("ADD1")
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Add2)
+                    .HasColumnName("ADD2")
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Add3)
+                    .HasColumnName("ADD3")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Area)
+                    .HasColumnName("AREA")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ChemistCode)
+                    .IsRequired()
+                    .HasColumnName("CHEMIST_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ChemistName)
+                    .IsRequired()
+                    .HasColumnName("CHEMIST_NAME")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CityId).HasColumnName("CITY_ID");
+
+                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
+
+                entity.Property(e => e.ContactPerson)
+                    .HasColumnName("CONTACT_PERSON")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("EMAIL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
+
+                entity.Property(e => e.Mobile)
+                    .HasColumnName("MOBILE")
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Phone1)
+                    .HasColumnName("PHONE_1")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Phone2)
+                    .HasColumnName("PHONE_2")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PinCode)
+                    .HasColumnName("PIN_CODE")
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StateId).HasColumnName("STATE_ID");
+            });
+
+            modelBuilder.Entity<ChemistAllocation>(entity =>
+            {
+                entity.HasKey(e => e.ChemistAllotId);
+
+                entity.ToTable("CHEMIST_ALLOCATION", "CHEMIST");
+
+                entity.Property(e => e.ChemistAllotId).HasColumnName("CHEMIST_ALLOT_ID");
+
+                entity.Property(e => e.ChemistCategory)
+                    .HasColumnName("CHEMIST_CATEGORY")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ChemistCode)
+                    .IsRequired()
+                    .HasColumnName("CHEMIST_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
+
+                entity.Property(e => e.McrNo).HasColumnName("MCR_NO");
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.RepId).HasColumnName("REP_ID");
+
+                entity.Property(e => e.SbuId).HasColumnName("SBU_ID");
+
+                entity.Property(e => e.SerNo).HasColumnName("SER_NO");
             });
 
             modelBuilder.Entity<City>(entity =>
@@ -424,11 +581,461 @@ namespace FrontlineMaster.Repository.ContextModel
                     .HasConstraintName("FK_DESIG_GRP_DESIG");
             });
 
+            modelBuilder.Entity<Doctor>(entity =>
+            {
+                entity.ToTable("DOCTOR", "DOCTOR");
+
+                entity.Property(e => e.DoctorId).HasColumnName("DOCTOR_ID");
+
+                entity.Property(e => e.AnnDate)
+                    .HasColumnName("ANN_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("BIRTH_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CardQuali)
+                    .HasColumnName("CARD_QUALI")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
+
+                entity.Property(e => e.DrCode)
+                    .IsRequired()
+                    .HasColumnName("DR_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("FIRST_NAME")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GenderId).HasColumnName("GENDER_ID");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("LAST_NAME")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MiddleName)
+                    .HasColumnName("MIDDLE_NAME")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.OriginalDrCode)
+                    .HasColumnName("ORIGINAL_DR_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OriginalSpec)
+                    .HasColumnName("ORIGINAL_SPEC")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.QualificationId).HasColumnName("QUALIFICATION_ID");
+
+                entity.Property(e => e.RegisterCode)
+                    .HasColumnName("REGISTER_CODE")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SpecId).HasColumnName("SPEC_ID");
+
+                entity.Property(e => e.UnduplicatedFlag)
+                    .HasColumnName("UNDUPLICATED_FLAG")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.Doctor)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DOCTOR_COMPANY");
+
+                entity.HasOne(d => d.Gender)
+                    .WithMany(p => p.Doctor)
+                    .HasForeignKey(d => d.GenderId)
+                    .HasConstraintName("FK_DOCTOR_CODE_VALUE");
+
+                entity.HasOne(d => d.Qualification)
+                    .WithMany(p => p.Doctor)
+                    .HasForeignKey(d => d.QualificationId)
+                    .HasConstraintName("FK_DOCTOR_QUALIFICATION");
+
+                entity.HasOne(d => d.Spec)
+                    .WithMany(p => p.Doctor)
+                    .HasForeignKey(d => d.SpecId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DOCTOR_SPECIALITY");
+            });
+
+            modelBuilder.Entity<DoctorAddr>(entity =>
+            {
+                entity.HasKey(e => e.DrAddrId);
+
+                entity.ToTable("DOCTOR_ADDR", "DOCTOR");
+
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
+
+                entity.Property(e => e.Add1)
+                    .HasColumnName("ADD1")
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Add2)
+                    .HasColumnName("ADD2")
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Add3)
+                    .HasColumnName("ADD3")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AddrCode)
+                    .IsRequired()
+                    .HasColumnName("ADDR_CODE")
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AddrTypId).HasColumnName("ADDR_TYP_ID");
+
+                entity.Property(e => e.Area)
+                    .HasColumnName("AREA")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CityId).HasColumnName("CITY_ID");
+
+                entity.Property(e => e.ClinicName)
+                    .HasColumnName("CLINIC_NAME")
+                    .HasMaxLength(120)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('Admin')");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorId).HasColumnName("DOCTOR_ID");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("EMAIL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Mobile)
+                    .HasColumnName("MOBILE")
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.PhoneC)
+                    .HasColumnName("PHONE_C")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneR)
+                    .HasColumnName("PHONE_R")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PinCode)
+                    .HasColumnName("PIN_CODE")
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RegisterCode)
+                    .HasColumnName("REGISTER_CODE")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StateId).HasColumnName("STATE_ID");
+
+                entity.HasOne(d => d.AddrTyp)
+                    .WithMany(p => p.DoctorAddr)
+                    .HasForeignKey(d => d.AddrTypId)
+                    .HasConstraintName("FK_DOCTOR_ADDR_CODE_VALUE");
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.DoctorAddr)
+                    .HasForeignKey(d => d.CityId)
+                    .HasConstraintName("FK_DOCTOR_ADDR_CITY");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.DoctorAddr)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_DOCTOR_ADDR_DOCTOR");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.DoctorAddr)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK_DOCTOR_ADDR_STATE");
+            });
+
+            modelBuilder.Entity<DoctorDraft>(entity =>
+            {
+                entity.HasKey(e => e.DoctorId)
+                    .HasName("PK_DCR_DR_MST_DRAFT1");
+
+                entity.ToTable("DOCTOR_DRAFT", "DOCTOR");
+
+                entity.Property(e => e.DoctorId).HasColumnName("DOCTOR_ID");
+
+                entity.Property(e => e.AnnDate)
+                    .HasColumnName("ANN_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ApproveOnlyAddr)
+                    .HasColumnName("APPROVE_ONLY_ADDR")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength()
+                    .HasDefaultValueSql("('N')");
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("BIRTH_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CardQuali)
+                    .HasColumnName("CARD_QUALI")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('Admin')");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DrCode)
+                    .IsRequired()
+                    .HasColumnName("DR_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EntryCategory)
+                    .HasColumnName("ENTRY_CATEGORY")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.FinalDrCode)
+                    .HasColumnName("FINAL_DR_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnName("FIRST_NAME")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ImageUrl)
+                    .HasColumnName("IMAGE_URL")
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.LastApprLevel)
+                    .HasColumnName("LAST_APPR_LEVEL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastApprovalById)
+                    .HasColumnName("LAST_APPROVAL_BY_ID")
+                    .HasDefaultValueSql("(suser_sname())");
+
+                entity.Property(e => e.LastApprovalDate)
+                    .HasColumnName("LAST_APPROVAL_DATE")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LastApprovalMcrno).HasColumnName("LAST_APPROVAL_MCRNO");
+
+                entity.Property(e => e.LastApprovalRemark)
+                    .HasColumnName("LAST_APPROVAL_REMARK")
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastApprovalStatus)
+                    .HasColumnName("LAST_APPROVAL_STATUS")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength()
+                    .HasDefaultValueSql("('P')");
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("LAST_NAME")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.McrNo).HasColumnName("MCR_NO");
+
+                entity.Property(e => e.MiddleName)
+                    .HasColumnName("MIDDLE_NAME")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('Admin')");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.NextApprLevel)
+                    .HasColumnName("NEXT_APPR_LEVEL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OnlyAddrDrCode)
+                    .HasColumnName("ONLY_ADDR_DR_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OriginalDrCode)
+                    .HasColumnName("ORIGINAL_DR_CODE")
+                    .HasMaxLength(6)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OriginalSpecId).HasColumnName("ORIGINAL_SPEC_ID");
+
+                entity.Property(e => e.QualificationId).HasColumnName("QUALIFICATION_ID");
+
+                entity.Property(e => e.RegisterCode)
+                    .HasColumnName("REGISTER_CODE")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Remark)
+                    .HasColumnName("REMARK")
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RepId).HasColumnName("REP_ID");
+
+                entity.Property(e => e.SeqNo)
+                    .HasColumnName("SEQ_NO")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.SpecId).HasColumnName("SPEC_ID");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("STATUS")
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.DoctorDraft)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_MST_DRAFT_Company");
+
+                entity.HasOne(d => d.LastApprovalBy)
+                    .WithMany(p => p.DoctorDraftLastApprovalBy)
+                    .HasForeignKey(d => d.LastApprovalById)
+                    .HasConstraintName("FK_DOCTOR_DRAFT_APPR_LVL1");
+
+                entity.HasOne(d => d.OriginalSpec)
+                    .WithMany(p => p.DoctorDraftOriginalSpec)
+                    .HasForeignKey(d => d.OriginalSpecId)
+                    .HasConstraintName("FK_DR_MST_DRAFT_SPECIALITY1");
+
+                entity.HasOne(d => d.Qualification)
+                    .WithMany(p => p.DoctorDraft)
+                    .HasForeignKey(d => d.QualificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_MST_DRAFT_QUALIFICATION");
+
+                entity.HasOne(d => d.Rep)
+                    .WithMany(p => p.DoctorDraftRep)
+                    .HasForeignKey(d => d.RepId)
+                    .HasConstraintName("FK_DOCTOR_DRAFT_REP_MST");
+
+                entity.HasOne(d => d.Spec)
+                    .WithMany(p => p.DoctorDraftSpec)
+                    .HasForeignKey(d => d.SpecId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_MST_DRAFT_SPECIALITY");
+            });
+
             modelBuilder.Entity<DrAddrDraft>(entity =>
             {
+                entity.HasKey(e => e.DrAddrId)
+                    .HasName("PK_DCR_DR_ADDR_DRAFT1");
+
                 entity.ToTable("DR_ADDR_DRAFT", "DOCTOR");
 
-                entity.Property(e => e.DrAddrDraftId).HasColumnName("DR_ADDR_DRAFT_ID");
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
 
                 entity.Property(e => e.Add1)
                     .IsRequired()
@@ -453,92 +1060,6 @@ namespace FrontlineMaster.Repository.ContextModel
                     .IsUnicode(false);
 
                 entity.Property(e => e.AddrTypeId).HasColumnName("ADDR_TYPE_ID");
-
-                entity.Property(e => e.ApprovalDate)
-                    .HasColumnName("APPROVAL_DATE")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.ApprovalFlag)
-                    .HasColumnName("APPROVAL_FLAG")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.ApprovalLevel1)
-                    .HasColumnName("APPROVAL_LEVEL1")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.ApprovalLevel1ById)
-                    .HasColumnName("APPROVAL_LEVEL1_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.ApprovalLevel1Date)
-                    .HasColumnName("APPROVAL_LEVEL1_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ApprovalLevel1Mcrno).HasColumnName("APPROVAL_LEVEL1_MCRNO");
-
-                entity.Property(e => e.ApprovalLevel1Remark)
-                    .HasColumnName("APPROVAL_LEVEL1_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalLevel2)
-                    .HasColumnName("APPROVAL_LEVEL2")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.ApprovalLevel2ById)
-                    .HasColumnName("APPROVAL_LEVEL2_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.ApprovalLevel2Date)
-                    .HasColumnName("APPROVAL_LEVEL2_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ApprovalLevel2Mcrno).HasColumnName("APPROVAL_LEVEL2_MCRNO");
-
-                entity.Property(e => e.ApprovalLevel2Remark)
-                    .HasColumnName("APPROVAL_LEVEL2_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalLevel3)
-                    .HasColumnName("APPROVAL_LEVEL3")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.ApprovalLevel3ById)
-                    .HasColumnName("APPROVAL_LEVEL3_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.ApprovalLevel3Date)
-                    .HasColumnName("APPROVAL_LEVEL3_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ApprovalLevel3Mcrno).HasColumnName("APPROVAL_LEVEL3_MCRNO");
-
-                entity.Property(e => e.ApprovalLevel3Remark)
-                    .HasColumnName("APPROVAL_LEVEL3_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalRemark)
-                    .HasColumnName("APPROVAL_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovedById).HasColumnName("APPROVED_BY_ID");
 
                 entity.Property(e => e.Area)
                     .IsRequired()
@@ -565,12 +1086,7 @@ namespace FrontlineMaster.Repository.ContextModel
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Day)
-                    .HasColumnName("DAY")
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DrMstDraftId).HasColumnName("DR_MST_DRAFT_ID");
+                entity.Property(e => e.DoctorId).HasColumnName("DOCTOR_ID");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("EMAIL")
@@ -583,34 +1099,11 @@ namespace FrontlineMaster.Repository.ContextModel
                     .IsUnicode(false)
                     .IsFixedLength();
 
+                entity.Property(e => e.FinalDoctorId).HasColumnName("FINAL_DOCTOR_ID");
+
                 entity.Property(e => e.FinalDrCode)
                     .HasColumnName("FINAL_DR_CODE")
                     .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FromTime)
-                    .HasColumnName("FROM_TIME")
-                    .HasColumnType("decimal(16, 2)");
-
-                entity.Property(e => e.HoApproval)
-                    .HasColumnName("HO_APPROVAL")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.HoApprovalById)
-                    .HasColumnName("HO_APPROVAL_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.HoApprovalDate)
-                    .HasColumnName("HO_APPROVAL_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.HoApprovalRemark)
-                    .HasColumnName("HO_APPROVAL_REMARK")
-                    .HasMaxLength(256)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ImageUrl)
@@ -622,6 +1115,32 @@ namespace FrontlineMaster.Repository.ContextModel
                     .IsRequired()
                     .HasColumnName("IS_ACTIVE")
                     .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.LastApprLevel)
+                    .HasColumnName("LAST_APPR_LEVEL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastApprovalById)
+                    .HasColumnName("LAST_APPROVAL_BY_ID")
+                    .HasDefaultValueSql("(suser_sname())");
+
+                entity.Property(e => e.LastApprovalDate)
+                    .HasColumnName("LAST_APPROVAL_DATE")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LastApprovalRemark)
+                    .HasColumnName("LAST_APPROVAL_REMARK")
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastApprovalStatus)
+                    .HasColumnName("LAST_APPROVAL_STATUS")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength()
+                    .HasDefaultValueSql("('P')");
 
                 entity.Property(e => e.McrNo).HasColumnName("MCR_NO");
 
@@ -641,6 +1160,11 @@ namespace FrontlineMaster.Repository.ContextModel
                     .HasColumnName("MODIFIED_DATE")
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.NextApprLevel)
+                    .HasColumnName("NEXT_APPR_LEVEL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PhoneC)
                     .HasColumnName("PHONE_C")
@@ -676,34 +1200,10 @@ namespace FrontlineMaster.Repository.ContextModel
 
                 entity.Property(e => e.StateId).HasColumnName("STATE_ID");
 
-                entity.Property(e => e.ToTime)
-                    .HasColumnName("TO_TIME")
-                    .HasColumnType("decimal(16, 2)");
-
                 entity.HasOne(d => d.AddrType)
                     .WithMany(p => p.DrAddrDraft)
                     .HasForeignKey(d => d.AddrTypeId)
                     .HasConstraintName("FK_DR_ADDR_DRAFT_CODE_VALUE");
-
-                entity.HasOne(d => d.ApprovalLevel1By)
-                    .WithMany(p => p.DrAddrDraftApprovalLevel1By)
-                    .HasForeignKey(d => d.ApprovalLevel1ById)
-                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST1");
-
-                entity.HasOne(d => d.ApprovalLevel2By)
-                    .WithMany(p => p.DrAddrDraftApprovalLevel2By)
-                    .HasForeignKey(d => d.ApprovalLevel2ById)
-                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST2");
-
-                entity.HasOne(d => d.ApprovalLevel3By)
-                    .WithMany(p => p.DrAddrDraftApprovalLevel3By)
-                    .HasForeignKey(d => d.ApprovalLevel3ById)
-                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST3");
-
-                entity.HasOne(d => d.ApprovedBy)
-                    .WithMany(p => p.DrAddrDraftApprovedBy)
-                    .HasForeignKey(d => d.ApprovedById)
-                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST");
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.DrAddrDraft)
@@ -711,21 +1211,362 @@ namespace FrontlineMaster.Repository.ContextModel
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DR_ADDR_DRAFT_CITY");
 
-                entity.HasOne(d => d.DrMstDraft)
+                entity.HasOne(d => d.Doctor)
                     .WithMany(p => p.DrAddrDraft)
-                    .HasForeignKey(d => d.DrMstDraftId)
+                    .HasForeignKey(d => d.DoctorId)
                     .HasConstraintName("FK_DR_ADDR_DRAFT_DR_MST_DRAFT");
 
-                entity.HasOne(d => d.HoApprovalBy)
-                    .WithMany(p => p.DrAddrDraftHoApprovalBy)
-                    .HasForeignKey(d => d.HoApprovalById)
-                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST4");
+                entity.HasOne(d => d.FinalDoctor)
+                    .WithMany(p => p.DrAddrDraft)
+                    .HasForeignKey(d => d.FinalDoctorId)
+                    .HasConstraintName("FK_DR_ADDR_DRAFT_DOCTOR");
+
+                entity.HasOne(d => d.LastApprovalBy)
+                    .WithMany(p => p.DrAddrDraftLastApprovalBy)
+                    .HasForeignKey(d => d.LastApprovalById)
+                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST1");
+
+                entity.HasOne(d => d.Rep)
+                    .WithMany(p => p.DrAddrDraftRep)
+                    .HasForeignKey(d => d.RepId)
+                    .HasConstraintName("FK_DR_ADDR_DRAFT_REP_MST");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.DrAddrDraft)
                     .HasForeignKey(d => d.StateId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DR_ADDR_DRAFT_STATE");
+            });
+
+            modelBuilder.Entity<DrAddrVisitHr>(entity =>
+            {
+                entity.HasKey(e => e.VisitHourId);
+
+                entity.ToTable("DR_ADDR_VISIT_HR", "DOCTOR");
+
+                entity.Property(e => e.VisitHourId).HasColumnName("VISIT_HOUR_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Day).HasColumnName("DAY");
+
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
+
+                entity.Property(e => e.FromTime)
+                    .HasColumnName("FROM_TIME")
+                    .HasColumnType("decimal(16, 2)");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ToTime)
+                    .HasColumnName("TO_TIME")
+                    .HasColumnType("decimal(16, 2)");
+
+                entity.HasOne(d => d.DayNavigation)
+                    .WithMany(p => p.DrAddrVisitHr)
+                    .HasForeignKey(d => d.Day)
+                    .HasConstraintName("FK_DR_ADDR_VISIT_HR_CODE_VALUE");
+
+                entity.HasOne(d => d.DrAddr)
+                    .WithMany(p => p.DrAddrVisitHr)
+                    .HasForeignKey(d => d.DrAddrId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ADDR_VISIT_HR_DR_ADDR");
+            });
+
+            modelBuilder.Entity<DrAddrVisitHrDraft>(entity =>
+            {
+                entity.HasKey(e => e.VisitHourId)
+                    .HasName("PK_VISIT_HOUR");
+
+                entity.ToTable("DR_ADDR_VISIT_HR_DRAFT", "DOCTOR");
+
+                entity.Property(e => e.VisitHourId).HasColumnName("VISIT_HOUR_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Day).HasColumnName("DAY");
+
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
+
+                entity.Property(e => e.FromTime)
+                    .HasColumnName("FROM_TIME")
+                    .HasColumnType("decimal(16, 2)");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ToTime)
+                    .HasColumnName("TO_TIME")
+                    .HasColumnType("decimal(16, 2)");
+
+                entity.HasOne(d => d.DayNavigation)
+                    .WithMany(p => p.DrAddrVisitHrDraft)
+                    .HasForeignKey(d => d.Day)
+                    .HasConstraintName("FK_DR_ADDR_VISIT_HOUR_CODE_VALUE");
+
+                entity.HasOne(d => d.DrAddr)
+                    .WithMany(p => p.DrAddrVisitHrDraft)
+                    .HasForeignKey(d => d.DrAddrId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ADDR_VISIT_HOUR_DR_ADDR_DRAFT");
+            });
+
+            modelBuilder.Entity<DrAllocation>(entity =>
+            {
+                entity.ToTable("DR_ALLOCATION", "DOCTOR");
+
+                entity.Property(e => e.DrAllocationId).HasColumnName("DR_ALLOCATION_ID");
+
+                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('Admin')");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorId).HasColumnName("DOCTOR_ID");
+
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
+
+                entity.Property(e => e.DrCategory)
+                    .HasColumnName("DR_CATEGORY")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.McrNo).HasColumnName("MCR_NO");
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.RepId).HasColumnName("REP_ID");
+
+                entity.Property(e => e.SbuId).HasColumnName("SBU_ID");
+
+                entity.Property(e => e.SerNo).HasColumnName("SER_NO");
+
+                entity.Property(e => e.TransferFlag)
+                    .HasColumnName("TRANSFER_FLAG")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.DrAllocation)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_COMPANY");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.DrAllocation)
+                    .HasForeignKey(d => d.DoctorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_DOCTOR");
+
+                entity.HasOne(d => d.DrAddr)
+                    .WithMany(p => p.DrAllocation)
+                    .HasForeignKey(d => d.DrAddrId)
+                    .HasConstraintName("FK_DR_ALLOCATION_DOCTOR_ADDR");
+
+                entity.HasOne(d => d.Rep)
+                    .WithMany(p => p.DrAllocation)
+                    .HasForeignKey(d => d.RepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_REP_MST");
+
+                entity.HasOne(d => d.Sbu)
+                    .WithMany(p => p.DrAllocation)
+                    .HasForeignKey(d => d.SbuId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_SBU");
+            });
+
+            modelBuilder.Entity<DrAllocationDraft>(entity =>
+            {
+                entity.HasKey(e => e.DrAllocationId);
+
+                entity.ToTable("DR_ALLOCATION_DRAFT", "DOCTOR");
+
+                entity.Property(e => e.DrAllocationId).HasColumnName("DR_ALLOCATION_ID");
+
+                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('Admin')");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorId).HasColumnName("DOCTOR_ID");
+
+                entity.Property(e => e.DrAddrId).HasColumnName("DR_ADDR_ID");
+
+                entity.Property(e => e.EntryCategory)
+                    .IsRequired()
+                    .HasColumnName("ENTRY_CATEGORY")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.LastApprLevel)
+                    .HasColumnName("LAST_APPR_LEVEL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastApprovalById).HasColumnName("LAST_APPROVAL_BY_ID");
+
+                entity.Property(e => e.LastApprovalDate)
+                    .HasColumnName("LAST_APPROVAL_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.LastApprovalRemark)
+                    .HasColumnName("LAST_APPROVAL_REMARK")
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastApprovalStatus)
+                    .HasColumnName("LAST_APPROVAL_STATUS")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength()
+                    .HasDefaultValueSql("('P')");
+
+                entity.Property(e => e.McrNo).HasColumnName("MCR_NO");
+
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.NextApprLevel)
+                    .HasColumnName("NEXT_APPR_LEVEL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PreMcrNo).HasColumnName("PRE_MCR_NO");
+
+                entity.Property(e => e.Remark)
+                    .HasColumnName("REMARK")
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RepId).HasColumnName("REP_ID");
+
+                entity.Property(e => e.SbuId).HasColumnName("SBU_ID");
+
+                entity.Property(e => e.SeqNo)
+                    .HasColumnName("SEQ_NO")
+                    .HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.DrAllocationDraft)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_DRAFT_COMPANY");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.DrAllocationDraft)
+                    .HasForeignKey(d => d.DoctorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_DRAFT_DOCTOR");
+
+                entity.HasOne(d => d.DrAddr)
+                    .WithMany(p => p.DrAllocationDraft)
+                    .HasForeignKey(d => d.DrAddrId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_DRAFT_DR_ADDR");
+
+                entity.HasOne(d => d.LastApprovalBy)
+                    .WithMany(p => p.DrAllocationDraftLastApprovalBy)
+                    .HasForeignKey(d => d.LastApprovalById)
+                    .HasConstraintName("FK_DR_ALLOCATION_DRAFT_APPR_LEVEL1");
+
+                entity.HasOne(d => d.Rep)
+                    .WithMany(p => p.DrAllocationDraftRep)
+                    .HasForeignKey(d => d.RepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_DRAFT_REP_MST");
+
+                entity.HasOne(d => d.Sbu)
+                    .WithMany(p => p.DrAllocationDraft)
+                    .HasForeignKey(d => d.SbuId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DR_ALLOCATION_DRAFT_SBU");
             });
 
             modelBuilder.Entity<DrDropReason>(entity =>
@@ -771,148 +1612,19 @@ namespace FrontlineMaster.Repository.ContextModel
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<DrMstDraft>(entity =>
+            modelBuilder.Entity<EntApprConfig>(entity =>
             {
-                entity.ToTable("DR_MST_DRAFT", "DOCTOR");
+                entity.HasKey(e => e.ApprLevelId);
 
-                entity.Property(e => e.DrMstDraftId).HasColumnName("DR_MST_DRAFT_ID");
+                entity.ToTable("ENT_APPR_CONFIG", "MASTER");
 
-                entity.Property(e => e.Add1)
+                entity.Property(e => e.ApprLevelId).HasColumnName("APPR_LEVEL_ID");
+
+                entity.Property(e => e.ApprLevel)
                     .IsRequired()
-                    .HasColumnName("ADD1")
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Add2)
-                    .HasColumnName("ADD2")
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Add3)
-                    .HasColumnName("ADD3")
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AnnDate)
-                    .HasColumnName("ANN_DATE")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.ApprovalDate)
-                    .HasColumnName("APPROVAL_DATE")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.ApprovalFlag)
-                    .HasColumnName("APPROVAL_FLAG")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.ApprovalLevel1)
-                    .HasColumnName("APPROVAL_LEVEL1")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.ApprovalLevel1ById)
-                    .HasColumnName("APPROVAL_LEVEL1_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.ApprovalLevel1Date)
-                    .HasColumnName("APPROVAL_LEVEL1_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ApprovalLevel1Mcrno).HasColumnName("APPROVAL_LEVEL1_MCRNO");
-
-                entity.Property(e => e.ApprovalLevel1Remark)
-                    .HasColumnName("APPROVAL_LEVEL1_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalLevel2)
-                    .HasColumnName("APPROVAL_LEVEL2")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.ApprovalLevel2ById)
-                    .HasColumnName("APPROVAL_LEVEL2_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.ApprovalLevel2Date)
-                    .HasColumnName("APPROVAL_LEVEL2_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ApprovalLevel2Mcrno).HasColumnName("APPROVAL_LEVEL2_MCRNO");
-
-                entity.Property(e => e.ApprovalLevel2Remark)
-                    .HasColumnName("APPROVAL_LEVEL2_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalLevel3)
-                    .HasColumnName("APPROVAL_LEVEL3")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.ApprovalLevel3ById)
-                    .HasColumnName("APPROVAL_LEVEL3_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.ApprovalLevel3Date)
-                    .HasColumnName("APPROVAL_LEVEL3_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ApprovalLevel3Mcrno).HasColumnName("APPROVAL_LEVEL3_MCRNO");
-
-                entity.Property(e => e.ApprovalLevel3Remark)
-                    .HasColumnName("APPROVAL_LEVEL3_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalRemark)
-                    .HasColumnName("APPROVAL_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApproveOnlyAddr)
-                    .HasColumnName("APPROVE_ONLY_ADDR")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('N')");
-
-                entity.Property(e => e.ApprovedById).HasColumnName("APPROVED_BY_ID");
-
-                entity.Property(e => e.Area)
-                    .IsRequired()
-                    .HasColumnName("AREA")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.BirthDate)
-                    .HasColumnName("BIRTH_DATE")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.CardQuali)
-                    .HasColumnName("CARD_QUALI")
+                    .HasColumnName("APPR_LEVEL")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.Property(e => e.CityId).HasColumnName("CITY_ID");
-
-                entity.Property(e => e.ClinicName)
-                    .HasColumnName("CLINIC_NAME")
-                    .HasMaxLength(120)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
 
                 entity.Property(e => e.CreatedBy)
                     .IsRequired()
@@ -923,70 +1635,12 @@ namespace FrontlineMaster.Repository.ContextModel
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnName("CREATED_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.Day)
-                    .HasColumnName("DAY")
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DrCode)
+                entity.Property(e => e.EntityName)
                     .IsRequired()
-                    .HasColumnName("DR_CODE")
-                    .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Email)
-                    .HasColumnName("EMAIL")
+                    .HasColumnName("ENTITY_NAME")
                     .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EntryCategory)
-                    .HasColumnName("ENTRY_CATEGORY")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.FinalDrCode)
-                    .HasColumnName("FINAL_DR_CODE")
-                    .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasColumnName("FIRST_NAME")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FromTime)
-                    .HasColumnName("FROM_TIME")
-                    .HasColumnType("decimal(16, 2)");
-
-                entity.Property(e => e.HoApproval)
-                    .HasColumnName("HO_APPROVAL")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasDefaultValueSql("('P')");
-
-                entity.Property(e => e.HoApprovalById)
-                    .HasColumnName("HO_APPROVAL_BY_ID")
-                    .HasDefaultValueSql("(suser_sname())");
-
-                entity.Property(e => e.HoApprovalDate)
-                    .HasColumnName("HO_APPROVAL_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.HoApprovalRemark)
-                    .HasColumnName("HO_APPROVAL_REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ImageUrl)
-                    .HasColumnName("IMAGE_URL")
-                    .HasMaxLength(256)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IsActive)
@@ -994,153 +1648,81 @@ namespace FrontlineMaster.Repository.ContextModel
                     .HasColumnName("IS_ACTIVE")
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LastName)
-                    .HasColumnName("LAST_NAME")
-                    .HasMaxLength(20)
+                entity.Property(e => e.ModifiedBy)
+                    .IsRequired()
+                    .HasColumnName("MODIFIED_BY")
+                    .HasMaxLength(7)
                     .IsUnicode(false);
 
-                entity.Property(e => e.McrNo).HasColumnName("MCR_NO");
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnName("MODIFIED_DATE")
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.MiddleName)
-                    .HasColumnName("MIDDLE_NAME")
-                    .HasMaxLength(20)
+                entity.Property(e => e.SeqNo).HasColumnName("SEQ_NO");
+            });
+
+            modelBuilder.Entity<EntityApproval>(entity =>
+            {
+                entity.HasKey(e => e.ApprovalId);
+
+                entity.ToTable("ENTITY_APPROVAL", "DOCTOR");
+
+                entity.Property(e => e.ApprovalId).HasColumnName("APPROVAL_ID");
+
+                entity.Property(e => e.ApprLevel)
+                    .HasColumnName("APPR_LEVEL")
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Mobile)
-                    .HasColumnName("MOBILE")
-                    .HasMaxLength(15)
+                entity.Property(e => e.ApprovalById).HasColumnName("APPROVAL_BY_ID");
+
+                entity.Property(e => e.ApprovalDate)
+                    .HasColumnName("APPROVAL_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ApprovalRemark)
+                    .HasColumnName("APPROVAL_REMARK")
+                    .HasMaxLength(256)
                     .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasColumnName("CREATED_BY")
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CREATED_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.EntityId).HasColumnName("ENTITY_ID");
+
+                entity.Property(e => e.EntityName)
+                    .IsRequired()
+                    .HasColumnName("ENTITY_NAME")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasColumnName("IS_ACTIVE")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.ModifiedBy)
                     .IsRequired()
                     .HasColumnName("MODIFIED_BY")
                     .HasMaxLength(7)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('Admin')");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnName("MODIFIED_DATE")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.OnlyAddrDrCode)
-                    .HasColumnName("ONLY_ADDR_DR_CODE")
-                    .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OriginalDrCode)
-                    .HasColumnName("ORIGINAL_DR_CODE")
-                    .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OriginalSpecId).HasColumnName("ORIGINAL_SPEC_ID");
-
-                entity.Property(e => e.PhoneC)
-                    .HasColumnName("PHONE_C")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PhoneR)
-                    .HasColumnName("PHONE_R")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PinCode)
-                    .IsRequired()
-                    .HasColumnName("PIN_CODE")
-                    .HasMaxLength(8)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.QualificationId).HasColumnName("QUALIFICATION_ID");
-
-                entity.Property(e => e.RegisterCode)
-                    .HasColumnName("REGISTER_CODE")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Remark)
-                    .HasColumnName("REMARK")
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RepId).HasColumnName("REP_ID");
-
-                entity.Property(e => e.SeqNo)
-                    .HasColumnName("SEQ_NO")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.SpecId).HasColumnName("SPEC_ID");
-
-                entity.Property(e => e.StateId).HasColumnName("STATE_ID");
-
-                entity.Property(e => e.ToTime)
-                    .HasColumnName("TO_TIME")
-                    .HasColumnType("decimal(16, 2)");
-
-                entity.HasOne(d => d.ApprovalLevel1By)
-                    .WithMany(p => p.DrMstDraftApprovalLevel1By)
-                    .HasForeignKey(d => d.ApprovalLevel1ById)
-                    .HasConstraintName("FK_DR_MST_DRAFT_REP_MST1");
-
-                entity.HasOne(d => d.ApprovalLevel2By)
-                    .WithMany(p => p.DrMstDraftApprovalLevel2By)
-                    .HasForeignKey(d => d.ApprovalLevel2ById)
-                    .HasConstraintName("FK_DR_MST_DRAFT_REP_MST2");
-
-                entity.HasOne(d => d.ApprovalLevel3By)
-                    .WithMany(p => p.DrMstDraftApprovalLevel3By)
-                    .HasForeignKey(d => d.ApprovalLevel3ById)
-                    .HasConstraintName("FK_DR_MST_DRAFT_REP_MST3");
-
-                entity.HasOne(d => d.ApprovedBy)
-                    .WithMany(p => p.DrMstDraftApprovedBy)
-                    .HasForeignKey(d => d.ApprovedById)
-                    .HasConstraintName("FK_DR_MST_DRAFT_REP_MST5");
-
-                entity.HasOne(d => d.City)
-                    .WithMany(p => p.DrMstDraft)
-                    .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DR_MST_DRAFT_CITY");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.DrMstDraft)
-                    .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DR_MST_DRAFT_Company");
-
-                entity.HasOne(d => d.HoApprovalBy)
-                    .WithMany(p => p.DrMstDraftHoApprovalBy)
-                    .HasForeignKey(d => d.HoApprovalById)
-                    .HasConstraintName("FK_DR_MST_DRAFT_REP_MST4");
-
-                entity.HasOne(d => d.OriginalSpec)
-                    .WithMany(p => p.DrMstDraftOriginalSpec)
-                    .HasForeignKey(d => d.OriginalSpecId)
-                    .HasConstraintName("FK_DR_MST_DRAFT_SPECIALITY1");
-
-                entity.HasOne(d => d.Qualification)
-                    .WithMany(p => p.DrMstDraft)
-                    .HasForeignKey(d => d.QualificationId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DR_MST_DRAFT_QUALIFICATION");
-
-                entity.HasOne(d => d.Rep)
-                    .WithMany(p => p.DrMstDraftRep)
-                    .HasForeignKey(d => d.RepId)
-                    .HasConstraintName("FK_DR_MST_DRAFT_REP_MST");
-
-                entity.HasOne(d => d.Spec)
-                    .WithMany(p => p.DrMstDraftSpec)
-                    .HasForeignKey(d => d.SpecId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DR_MST_DRAFT_SPECIALITY");
-
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.DrMstDraft)
-                    .HasForeignKey(d => d.StateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DR_MST_DRAFT_STATE");
+                entity.Property(e => e.Status)
+                    .HasColumnName("STATUS")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<FamilyDetail>(entity =>

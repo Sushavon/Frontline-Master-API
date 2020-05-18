@@ -7,8 +7,9 @@ namespace FrontlineMaster.Repository.ContextModel
     {
         public Speciality()
         {
-            DrMstDraftOriginalSpec = new HashSet<DrMstDraft>();
-            DrMstDraftSpec = new HashSet<DrMstDraft>();
+            Doctor = new HashSet<Doctor>();
+            DoctorDraftOriginalSpec = new HashSet<DoctorDraft>();
+            DoctorDraftSpec = new HashSet<DoctorDraft>();
             Qualification = new HashSet<Qualification>();
         }
 
@@ -25,8 +26,9 @@ namespace FrontlineMaster.Repository.ContextModel
         public DateTime ModifiedDate { get; set; }
 
         public virtual Company Company { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftOriginalSpec { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraftSpec { get; set; }
+        public virtual ICollection<Doctor> Doctor { get; set; }
+        public virtual ICollection<DoctorDraft> DoctorDraftOriginalSpec { get; set; }
+        public virtual ICollection<DoctorDraft> DoctorDraftSpec { get; set; }
         public virtual ICollection<Qualification> Qualification { get; set; }
     }
 }

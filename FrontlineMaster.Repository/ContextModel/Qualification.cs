@@ -7,7 +7,8 @@ namespace FrontlineMaster.Repository.ContextModel
     {
         public Qualification()
         {
-            DrMstDraft = new HashSet<DrMstDraft>();
+            Doctor = new HashSet<Doctor>();
+            DoctorDraft = new HashSet<DoctorDraft>();
         }
 
         public int QualificationId { get; set; }
@@ -22,6 +23,7 @@ namespace FrontlineMaster.Repository.ContextModel
         public DateTime ModifiedDate { get; set; }
 
         public virtual Speciality Spec { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraft { get; set; }
+        public virtual ICollection<Doctor> Doctor { get; set; }
+        public virtual ICollection<DoctorDraft> DoctorDraft { get; set; }
     }
 }

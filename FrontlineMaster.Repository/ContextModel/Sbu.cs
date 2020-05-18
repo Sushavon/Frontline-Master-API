@@ -8,6 +8,8 @@ namespace FrontlineMaster.Repository.ContextModel
         public Sbu()
         {
             Desig = new HashSet<Desig>();
+            DrAllocation = new HashSet<DrAllocation>();
+            DrAllocationDraft = new HashSet<DrAllocationDraft>();
             MenuGroupRights = new HashSet<MenuGroupRights>();
             RepMst = new HashSet<RepMst>();
             UserHistory = new HashSet<UserHistory>();
@@ -48,6 +50,8 @@ namespace FrontlineMaster.Repository.ContextModel
 
         public virtual Company Company { get; set; }
         public virtual ICollection<Desig> Desig { get; set; }
+        public virtual ICollection<DrAllocation> DrAllocation { get; set; }
+        public virtual ICollection<DrAllocationDraft> DrAllocationDraft { get; set; }
         public virtual ICollection<MenuGroupRights> MenuGroupRights { get; set; }
         public virtual ICollection<RepMst> RepMst { get; set; }
         public virtual ICollection<UserHistory> UserHistory { get; set; }

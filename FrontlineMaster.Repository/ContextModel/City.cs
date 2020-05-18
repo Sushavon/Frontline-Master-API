@@ -7,8 +7,8 @@ namespace FrontlineMaster.Repository.ContextModel
     {
         public City()
         {
+            DoctorAddr = new HashSet<DoctorAddr>();
             DrAddrDraft = new HashSet<DrAddrDraft>();
-            DrMstDraft = new HashSet<DrMstDraft>();
             RepMst = new HashSet<RepMst>();
         }
 
@@ -27,8 +27,8 @@ namespace FrontlineMaster.Repository.ContextModel
         public DateTime ModifiedDate { get; set; }
 
         public virtual State State { get; set; }
+        public virtual ICollection<DoctorAddr> DoctorAddr { get; set; }
         public virtual ICollection<DrAddrDraft> DrAddrDraft { get; set; }
-        public virtual ICollection<DrMstDraft> DrMstDraft { get; set; }
         public virtual ICollection<RepMst> RepMst { get; set; }
     }
 }
