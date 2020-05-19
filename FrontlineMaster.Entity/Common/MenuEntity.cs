@@ -1,7 +1,10 @@
-﻿namespace FrontlineMaster.Entity.Common
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FrontlineMaster.Entity.Common
 {
     public class MenuEntity
     {
+        [Key]
         public int MenuId { get; set; }
         // public string MenuCode { get; set; }
         public string Status { get; set; }
